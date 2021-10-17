@@ -7,10 +7,12 @@ export default function Textform(props) {
     const handleUpperCaseEvent = ()=>{
         let textValue = text.toUpperCase();
         setText(textValue);
+        props.showAlert('Converted to uppercase!', 'success');
     };
     const handleLowerCaseEvent = ()=>{
         let textValue = text.toLowerCase();
         setText(textValue);
+        props.showAlert('Converted to lowercase!', 'success');
     };
     // const onCopyText = ()=>{
     //     setIsCopied(true);
@@ -22,14 +24,17 @@ export default function Textform(props) {
         var text = document.getElementById("myBox");
         text.select();
         navigator.clipboard.writeText(text.value);
+        props.showAlert('Copied to clipboard!', 'success');
     };
     const handleExtraSpaces = ()=>{
         let newText = text.split(/[  ]+/);
         setText(newText.join(" "));
+        props.showAlert('Extra spaces removed!', 'success');
     };
     const handleClearEvent = ()=>{
         let textValue = "";
         setText(textValue);
+        props.showAlert('Text has been cleared!', 'success');
     };
     const handleOnChangeEvent = (event)=>{
         setText(event.target.value);
@@ -37,10 +42,11 @@ export default function Textform(props) {
 
     return (
         <>
-            <div className="container">
+            <div className="container" style={{color:props.mode === 'dark' ? 'white' : 'black'}}>
                 <h1>{props.heading}</h1>
                 <div className="my-3">
-                    <textarea className="form-control" id="myBox" rows="8" value={text} onChange={handleOnChangeEvent}></textarea>
+                    <textarea className="form-control" id="myBox" rows="8" value={text} onChange={handleOnChangeEvent} 
+                    style={{backgroundColor: props.mode==='dark' ? 'grey' : 'white',color:props.mode === 'dark' ? 'white' : 'black'}}></textarea>
                 </div>
                 <button className="btn btn-primary" onClick={handleUpperCaseEvent}>Convert to Upper Case</button>
                 <button className="btn btn-primary mx-1" onClick={handleLowerCaseEvent}>Convert to Lower Case</button>
@@ -57,13 +63,13 @@ export default function Textform(props) {
                     </div>
                 </CopyToClipboard> */}
             </div>
-            {/* <div className="container my-3">
+            <div className="container my-3" style={{color:props.mode === 'dark' ? 'white' : 'black'}}>
                 <h2>Your text summary</h2>
                 <p>{text.split(" ").length} words, {text.length} characters</p>
                 <p>{0.008 * text.split(" ").length} minutes to read.</p>
                 <h2>Preview</h2>
-                <p>{text}</p>
-            </div> */}
+                <p>{text.length> 0 ? text : "Enter the text in the above textbox to preview"}</p>
+            </div>
         </>
     )
 }

@@ -10,16 +10,48 @@ import Alert from './components/Alert';
 function App() {
   const[mode, setMode] = useState('light');
   const[alert, setAlert] = useState(null);
+  const[color, setColor] = useState('black');
+  const[colorArray, setColorArray] = useState({
+    'colorValue' : 'black',
+    'backgroundColor' : 'white'
+  });
+
   const toggleMode = ()=>{
+    let backgroundColor = '';
+    let colorValue = '';
+    console.log(color)
     if(mode === 'light'){
       setMode('dark');
-      document.body.style.backgroundColor = 'grey';
+      if(color == 'red'){
+        backgroundColor = '#dd0430';
+        colorValue = '';
+      }else{
+        backgroundColor = 'grey';
+        colorValue = '';
+      }
       showAlert("Dark mode has been enabled!!!", 'success');
     }else{
       setMode('light');
-      document.body.style.backgroundColor = 'white';
+      if(color == 'red'){
+        backgroundColor = '#d9677e';
+        colorValue = '';
+      }else{
+        backgroundColor = 'white';
+        colorValue = '';
+      }
+      
       showAlert("Light mode has been enabled!!!", 'success');
     }
+
+    document.body.style.backgroundColor = backgroundColor;
+      setColorArray({
+        'color' : colorValue,
+        'backgroundColor' : backgroundColor
+      });
+  };
+  const changeColor = (event)=>{
+    setColor(event.target.value);
+    console.log(color);
   };
   const showAlert = (message, type)=>{
     setAlert({
@@ -32,10 +64,10 @@ function App() {
   };
   return (
     <>
-      <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode}/>
+      <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode} changeColor={changeColor}/>
       <Alert alert={alert}/>
       <div className="container my-3">
-        <Textform heading="Enter the text to analyze " mode={mode} showAlert={showAlert}/>
+        <Textform heading="Enter the text to analyze " mode={mode} showAlert={showAlert} colorArray={colorArray}/>
         {/* <About /> */}
       </div>
     </>

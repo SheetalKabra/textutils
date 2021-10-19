@@ -22,7 +22,7 @@ function App() {
     console.log(color)
     if(mode === 'light'){
       setMode('dark');
-      if(color == 'red'){
+      if(color === 'red'){
         backgroundColor = '#dd0430';
         colorValue = '';
       }else{
@@ -32,7 +32,7 @@ function App() {
       showAlert("Dark mode has been enabled!!!", 'success');
     }else{
       setMode('light');
-      if(color == 'red'){
+      if(color === 'red'){
         backgroundColor = '#d9677e';
         colorValue = '';
       }else{

@@ -5,6 +5,11 @@ import PropTypes from 'prop-types'
 import Textform from './components/Textform';
 import About from './components/About';
 import Alert from './components/Alert';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 
 function App() {
@@ -65,12 +70,20 @@ function App() {
   };
   return (
     <>
+    <Router>
       <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode} changeColor={changeColor}/>
       <Alert alert={alert}/>
       <div className="container my-3">
-        <Textform heading="Enter the text to analyze " mode={mode} showAlert={showAlert} colorArray={colorArray}/>
-        {/* <About /> */}
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/">
+          <Textform heading="Enter the text to analyze " mode={mode} showAlert={showAlert} colorArray={colorArray}/>
+          </Route>
+        </Switch>
       </div>
+      </Router>
     </>
   );
 }

@@ -30,6 +30,7 @@ function App() {
         colorValue = '';
       }
       showAlert("Dark mode has been enabled!!!", 'success');
+      document.title= 'Textutils - Dark Mode';
     }else{
       setMode('light');
       if(color === 'red'){
@@ -39,8 +40,8 @@ function App() {
         backgroundColor = 'white';
         colorValue = '';
       }
-      
       showAlert("Light mode has been enabled!!!", 'success');
+      document.title= 'Textutils - Light Mode';
     }
 
     document.body.style.backgroundColor = backgroundColor;

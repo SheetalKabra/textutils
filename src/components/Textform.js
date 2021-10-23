@@ -1,5 +1,4 @@
 import React,{useState} from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function Textform(props) {
     const[text, setText] = useState("");
@@ -24,6 +23,7 @@ export default function Textform(props) {
         var text = document.getElementById("myBox");
         text.select();
         navigator.clipboard.writeText(text.value);
+        document.getSelection().removeAllRanges();
         props.showAlert('Copied to clipboard!', 'success');
     };
     const handleExtraSpaces = ()=>{
@@ -43,16 +43,16 @@ export default function Textform(props) {
     return (
         <>
             <div className="container" style={{color:props.mode === 'dark' ? 'white' : 'black'}}>
-                <h1>{props.heading}</h1>
+                <h1 className="mb-2">{props.heading}</h1>
                 <div className="my-3">
                     <textarea className="form-control" id="myBox" rows="8" value={text} onChange={handleOnChangeEvent} 
-                    style={{backgroundColor: props.colorArray.backgroundColor,color:props.mode === 'dark' ? 'white' : 'black'}}></textarea>
+                    style={{backgroundColor: props.colorArray.backgroundColorTextForm,color:props.mode === 'dark' ? 'white' : 'black'}}></textarea>
                 </div>
-                <button className="btn btn-primary" onClick={handleUpperCaseEvent}>Convert to Upper Case</button>
-                <button className="btn btn-primary mx-1" onClick={handleLowerCaseEvent}>Convert to Lower Case</button>
-                <button className="btn btn-primary mx-1" onClick={handleCopyText}>Copy Text</button>
-                <button className="btn btn-primary mx-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
-                <button className="btn btn-primary mx-1" onClick={handleClearEvent}>Clear Text</button>
+                <button disabled={text.length === 0} className="btn btn-primary" onClick={handleUpperCaseEvent}>Convert to Upper Case</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleLowerCaseEvent}>Convert to Lower Case</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleCopyText}>Copy Text</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+                <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleClearEvent}>Clear Text</button>
                 
                 {/* <CopyToClipboard text={text} onCopy={onCopyText}>
                     <div className="copy-area">
@@ -65,10 +65,10 @@ export default function Textform(props) {
             </div>
             <div className="container my-3" style={{color:props.mode === 'dark' ? 'white' : 'black'}}>
                 <h2>Your text summary</h2>
-                <p>{text === '' ? 0 : text.trim().split(" ").length} words, {text.length} characters</p>
+                <p>{text.split(" ").filter((element)=>{return element.length!==0}).length} words, {text.length} characters</p>
                 <p>{0.008 * text.split(" ").length} minutes to read.</p>
                 <h2>Preview</h2>
-                <p>{text.length> 0 ? text : "Enter the text in the above textbox to preview"}</p>
+                <p>{text.split(" ").filter((element)=>{return element.length!==0}).length> 0 ? text : "Nothing to preview"}</p>
             </div>
         </>
     )
